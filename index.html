@@ -25,14 +25,19 @@
       zoom: 12
     });
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const lat = urlParams.get('lat');
-    const lng = urlParams.get('lng');
+    function updateMapCenterFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const lat = urlParams.get('lat');
+      const lng = urlParams.get('lng');
 
-    if (lat && lng) {
-      const newCenter = [parseFloat(lng), parseFloat(lat)];
-      map.setCenter(newCenter);
+      if (lat && lng) {
+        const newCenter = [parseFloat(lng), parseFloat(lat)];
+        map.setCenter(newCenter);
+      }
     }
+
+    window.addEventListener('load', updateMapCenterFromURL);
+    window.addEventListener('popstate', updateMapCenterFromURL);
   </script>
 
 </body>
