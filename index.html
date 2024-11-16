@@ -21,6 +21,38 @@
       center: [105.8342, 21.0278],
       zoom: 12
     });
+
+    function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const { latitude, longitude } = position.coords;
+            map.setCenter([longitude, latitude]);
+            map.setZoom(14);
+
+            new mapboxgl.Marker()
+              .setLngLat([longitude, latitude])
+              .setPopup(new mapboxgl.Popup().setText("Your current location"))
+              .addTo(map);
+          },
+          error => {
+            console.error("Unable to retrieve your location.", error);
+            alert("Unable to retrieve your location. Please make sure location services are enabled.");
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    // Kiểm tra tham số "action" trong URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+
+    // Nếu action là "currentLocation", gọi hàm getCurrentLocation
+    if (action === 'currentLocation') {
+      getCurrentLocation();
+    }
   </script>
 
 </body>
