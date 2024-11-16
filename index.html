@@ -29,6 +29,20 @@
       .setLngLat([105.8342, 21.0278])
       .setPopup(new mapboxgl.Popup().setText('Default location: Hanoi'))
       .addTo(map);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const lat = urlParams.get('lat');
+    const lng = urlParams.get('lng');
+
+    if (lat && lng) {
+      const newCenter = [parseFloat(lng), parseFloat(lat)];
+      map.setCenter(newCenter);
+
+      new mapboxgl.Marker()
+        .setLngLat(newCenter)
+        .setPopup(new mapboxgl.Popup().setText('Tìm kiếm vị trí'))
+        .addTo(map);
+    }
   </script>
 
 </body>
